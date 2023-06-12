@@ -1,8 +1,22 @@
 import pytube
 import os
+import sys
+import re
 
-# Ask for URL
-url = input("Enter the YouTube URL: ")
+# Check for command line argument
+if len(sys.argv) > 1:
+    url = sys.argv[1]
+else:
+    # Prompt the user to input the YouTube URL
+    url = input("Enter the YouTube URL: ")
+
+# Extract the URL until the video ID
+match = re.search(r"(https://www.youtube.com/watch\?v=[^&]+)", url)
+if match:
+    url = match.group(1)
+else:
+    print("Error: Invalid YouTube URL format.")
+    sys.exit(1)
 
 # Show downloading message
 print("Downloading...")
